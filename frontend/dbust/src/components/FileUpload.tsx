@@ -61,23 +61,38 @@ const [isProcessing, setIsProcessing] = useState(false);
       }
     }, [handleFile]);
   
-    const handleUpload = useCallback(() => {
+    const handleUpload = useCallback(async () => {
       if (selectedFile) {
         setIsProcessing(true);
         
-        // Simulate processing delay
-        setTimeout(() => {
-          // Here you would normally send the file to the server
-          console.log('Processing file:', selectedFile.name);
+        try {
+          const formData = new FormData();
+          formData.append('file', selectedFile);
+
+          const response = await fetch('http://localhost:8080/api/files/upload', {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (!response.ok) {
+            throw new Error('Upload failed');
+          }
+
+          const data = await response.json();
+          console.log('File uploaded successfully:', data);
           
           setIsProcessing(false);
           setPreview(null);
           setIsPreviewShown(false);
           setSelectedFile(null);
           onFileUpload(selectedFile);
-        }, ); 
+        } catch (error) {
+          console.error('Upload error:', error);
+          setIsProcessing(false);
+          // You might want to show an error message to the user here
+        }
       }
-    }, [selectedFile]);
+    }, [selectedFile, onFileUpload]);
   
     const handleClear = useCallback(() => {
       setPreview(null);
