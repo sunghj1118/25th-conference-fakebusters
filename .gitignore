@@ -166,3 +166,9 @@ cython_debug/
 
 ## ignore all .env files in the root directory
 .env
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+out/
