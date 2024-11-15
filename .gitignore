@@ -161,14 +161,6 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-## ignore all .env files everywhere
-*.env
 
-## ignore all .env files in the root directory
-.env
-
-# IntelliJ IDEA
-.idea/
-*.iml
-*.iws
-out/
+# Ignore all .env files
+**/.env*
